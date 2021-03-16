@@ -9,3 +9,5 @@ del/*
 tmp_code_*
 .DS_Store
 .ipynb_checkpoints
+*-py3.ipynb
+*.o
