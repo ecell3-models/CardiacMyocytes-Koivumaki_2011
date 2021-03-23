@@ -138,7 +138,7 @@ LIBECS_DM_CLASS( Koivumaki_2011_ICaLAssignmentProcess, Process )
     ICaLfcatau = 2e-3
     */
     v = V->getValue();
-    ICaLfcainf->setValue( 1.0 - 1.0 / ( 1.0 + pow( kCa / Ca_ss->getMolarConc() * 1000.0, kCan)) );
+    ICaLfcainf->setValue( 1.0 - 1.0 / ( 1.0 + pow( kCa /( Ca_ss->getMolarConc() * 1000.0 ), kCan)) );
     ICaL->setValue( g_Ca_L * ICaLd->getValue() * ICaLfca->getValue() * pow( ICaLf1->getValue(), h_f1 ) * ICaLf2->getValue() * ( v - E_Ca_app ));
     ICaLdinf->setValue( 1.0 /( 1.0 + exp(( v + 9.0 )/ -5.8 )));
     ICaLfinf->setValue( 1.0 /( 1.0 + exp(( v + 27.4 )/ 7.1 )));
