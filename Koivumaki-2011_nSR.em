@@ -14,7 +14,7 @@ DEBUG_WITHOUT_If    = 0
 DEBUG_WITHOUT_ICab  = 0
 DEBUG_WITHOUT_J_mem = 0
 
-from math import exp, log, pi
+from math import exp, log, pi, sqrt
 
 N_A = 6.02214076e+23
 
@@ -22,17 +22,17 @@ R  = 8314.0  # R in component membrane (millijoule_per_mole_kelvin)
 T  = 306.15  # T in component membrane (kelvin)
 F  = 96487.0 # F in component membrane (coulomb_per_mole)
 
-Nao = 130
+Nao = 130.
 Cao = 1.8
 Ko = 5.4
 
 Cm = 0.05 #nF
 
 stim_duration = 1.0e-3 # sec
-stim_amp = -2820.0      # pA
+stim_amp = -2820.0     # pA
 BCL = 1.0              # sec
 stim_steepness = 20.0
-stim_offset = 1.0e-2   # sec
+stim_offset = 0.0      # sec
 
 #**********************************************
 # Model variant
@@ -91,10 +91,17 @@ xj_nj_Nai = 0.02/2 * Ddcell + 2*dx
 
 # Diffusion compartment volumes (uses j^2-(j-1)^2 = 2*j - 1) (Text S1, Eqn. 42)
 # (nL)
-Vnonjunct1 = pi * lcell * 1e-6 * 0.5 * dx * dx
-Vnonjunct2 = 3 * Vnonjunct1
-Vnonjunct3 = 5 * Vnonjunct1
-Vnonjunct4 = 7 * Vnonjunct1
+Vnonjunct1 = pi * lcell * 1e-6 * 0.5 * dx * dx  # 0.000506253396241
+Vnonjunct2 = 3 * Vnonjunct1                     # 0.00151876018872
+Vnonjunct3 = 5 * Vnonjunct1                     # 0.0025312669812
+Vnonjunct4 = 7 * Vnonjunct1                     # 0.00354377377368
+
+''' dy_human_atrial_PLoS_2014.m
+  Vnonjunct1 = 0.000506253396241
+  Vnonjunct2 = 0.001518760188722
+  Vnonjunct3 = 0.002531266981203
+  Vnonjunct4 = 0.003543773773684
+'''
 
 Vcytosol = [ Vss, Vnonjunct1, Vnonjunct2, Vnonjunct3, Vnonjunct4]
 
@@ -113,12 +120,28 @@ Vnonjunct_Nai = sum( Vcytosol[1:] )
 
 # Cytosol Ca Buffers
 BCa = 24e-3
-SLlow = 165
-SLhigh = 13
+SLlow = 165.
+SLhigh = 13.
 
 KdBCa = 2.38e-3
 KdSLlow = 1.1
 KdSLhigh = 13e-3
+
+''' dy_human_atrial_PLoS_2014.m
+  % Cytosol Ca Buffers
+  Begta = 0;
+  %Begta = 10; % 10 mM EGTA for voltage clamp measurements
+  Bcmdn = 24e-3;
+  BCa = Bcmdn + Begta;
+  SLlow = 165;
+  SLhigh = 13;
+
+  KdBegta = 0.12e-3;
+  KdBcmdn = 2.38e-3;
+  KdBCa = (Bcmdn*KdBcmdn + Begta*KdBegta) / (Bcmdn + Begta);
+  KdSLlow = 1.1;
+  KdSLhigh = 13e-3;
+'''
 
 # SR Ca buffers
 CSQN =  6.7
@@ -128,15 +151,14 @@ KdCSQN = 0.8
 # Area relation to Grandi et al. model 6.5**2 * pi() * 122 / (10.25**2 * pi() * 100) = 0.49
 # Bmax = 7.651*0.11 + 1.65*0.89 = 2.31
 BNa = 0.49 * 2.31
-KdBNa = 10
+KdBNa = 10.
 
 # Ion channel conductances & permeabilities & other parameters
+PNa = 0.00182  # INa:P_Na
 
-PNa = 0.0018  # INa:P_Na
-
-ECa_app = 60           # ICaL:ECa_app
+ECa_app = 60.          # ICaL:ECa_app
 gCaL = 15. * cAF_gCaL  # ICaL:ECa_app
-kCan = 2
+kCan = 2.
 kCa = 0.6e-3           # ICaL:k_Ca
 h_ICaLf1 = 0.
 #            k1     k2      k3           k4    k5      k6   k7            k8  k9
@@ -161,28 +183,26 @@ k_ICaLf2tau1 = 1.34
 k_ICaLf2tau5 = 0.04
 
 #gt = 7.5
-gt = 8.25 * cAF_gt  # It:g_t     Increased by ~9# in Maleckar et al.
-#gsus = 2.75
-gsus = 2.25 * cAF_gsus  # Isus:g_sus Decreased by ~11# in Maleckar et al.
-gKs = 1            # IKs:g_Ks
-gKr = 0.5          # IKr:g_Kr
-#gK1 = 3.825
-gK1 = 3.45 * cAF_gK1  # IK1:g_K1   3 in Nygren et al. 9 in Courtemanche et al.
-gNab = 0.060599    # INab:g_B_Na
-gCab = 0.0952      # ICab:g_B_Ca
+gt = 8.25 * cAF_gt          # It:g_t     Increased by ~9# in Maleckar et al.
+gsus = 2.25 * cAF_gsus      # Isus:g_sus Decreased by ~11# in Maleckar et al.
+gKs = 1.                    # IKs:g_Ks
+gKr = 0.5 * sqrt(Ko/5.4)    # IKr:g_Kr
+gK1 = 3.5 * cAF_gK1         # IK1:g_K1   3 in Nygren et al. 9 in Courtemanche et al.
+gNab = 0.060599             # INab:g_B_Na
+gCab = 0.0952               # ICab:g_B_Ca
 
-INaKmax = 70.8253  # INaK:i_NaK_max
-kNaKK = 1          # INaK:k_NaK_K
-kNaKNa = 11        # INaK:k_NaK_Na
+INaKmax = 70.8253           # INaK:i_NaK_max
+kNaKK = 1.                  # INaK:k_NaK_K
+kNaKNa = 11.                # INaK:k_NaK_Na
 
-ICaPmax = 2.0      # ICaP:i_CaP_max
-kCaP = 0.0005      # ICaP:k_CaP
+ICaPmax = 2.0               # ICaP:i_CaP_max
+kCaP = 0.0005               # ICaP:k_CaP
 
 kNaCa = 0.0084 * cAF_kNaCa  # INaCa:k_NaCa
-gam = 0.45         # INaCa:gamma
-dNaCa = 0.0003     # INaCa:d_NaCa
+gam = 0.45                  # INaCa:gamma
+dNaCa = 0.0003              # INaCa:d_NaCa
 
-gIf = 1            # If:gIf
+gIf = 1.                    # If:gIf
 
 # Ca and Na diffusion
 DCa = 780.0  # diffusion coefficient for Ca2+ (micrometer**2/sec)
@@ -223,7 +243,7 @@ kSRleak = 6e-3 / Dvcell
 k_nu = 1.0 / Dvcell
 k_nuss = 625.0 / Dvcell
 
-RyRtauadapt = 1
+RyRtauadapt = 1.
 
 RyRtauactss = 5e-3
 RyRtauinactss = 15e-3
@@ -232,40 +252,42 @@ RyRtauact = 18.75e-3
 RyRtauinact = 87.5e-3
 
 ### status
-V_0 = -75.20
-INam_0 = 0.002854
-INah1_0 = 0.9001
-INah2_0 = 0.9003
-ICaLd_0 = 0.00001104
-ICaLf1_0 = 0.9988
-ICaLf2_0 = 0.9988
-ICaLfca_0 = 0.9226
-Itr_0 = 0.0009795
-Its_0 = 0.9535
-Isusr_0 = 0.0003196
-Isuss_0 = 0.9726
-IKsn_0 = 0.004421
-IKrpa_0 = 0.00004354
-Ify_0 = 0.05500
-Nai_0 = 8.851
-Ki_0 = 135.2
-Nass_0 = 8.513
-Cass_0 = 0.0001737
-Cai_0 = [ Cass_0, 0.0001672, 0.0001670, 0.0001680, 0.0001719 ]
-RyRoss_0 = 0.00005934
-RyRcss_0 = 0.9999
-RyRass_0 = 0.2453
+V_0       = -7.520012e+01     # -75.20
+INam_0    =  2.853669e-03     # 0.002854
+INah1_0   =  9.000620e-01     # 0.9001
+INah2_0   =  9.003479e-01     # 0.9003
+ICaLd_0   =  1.103998e-05     # 0.00001104
+ICaLf1_0  =  9.988189e-01     # 0.9988
+ICaLf2_0  =  9.988214e-01     # 0.9988
+ICaLfca_0 =  9.226446e-01     # 0.9226
+Itr_0     =  9.794915e-04     # 0.0009795
+Its_0     =  9.534611e-01     # 0.9535
+Isusr_0   =  3.195553e-04     # 0.0003196
+Isuss_0   =  9.726240e-01     # 0.9726
+IKsn_0    =  4.420568e-03     # 0.004421
+IKrpa_0   =  4.353694e-05     # 0.00004354
+Ify_0     =  5.499663e-02     # 0.05500
+RyRoss_0  =  5.933700e-05     # 0.00005934
+RyRcss_0  =  9.999055e-01     # 0.9999
+RyRass_0  =  2.453034e-01     # 0.2453
+
+Nai_0     = 8.851
+Ki_0      = 135.2
+Nass_0    = 8.513
+Cass_0    = 0.0001737
+Cai_0     = [ Cass_0, 0.0001671766, 0.0001670499, 0.0001679643, 0.0001718838 ]
+# dy_human_atrial_PLoS_2014.m : 0.1671766, 0.1670499, 0.1679643, 0.1718838
 RyRo_0 = [ RyRoss_0, 0.0001916, 0.0001485, 0.0001010 ]
 RyRc_0 = [ RyRcss_0, 0.9970, 0.9985, 0.9993 ]
 RyRa_0 = [ RyRass_0, 0.2033, 0.2106, 0.2229 ]
 SERCACass_0 = 0.004891
 SERCACa_0 = [ SERCACass_0, 0.005351, 0.005213, 0.005020 ]
 CaCytosol_0 = Cai_0
-CaSR_0 = [ 0, 0.5755, 0.5664, 0.5535, 0.5428 ]
-
-ENa_0 = R*T/F * log ( Nao / Nass_0 )
-EK_0 = R*T/F * log ( Ko / Ki_0 )
-ECa_0 = R*T/F/2.0 * log ( Cao / Cass_0 )
+CaSR_0 = [ 0, 0.5754959, 0.5663678, 0.553524808248162, 0.5428496 ]
+# dy_human_atrial_PLoS_2014.m : 0.5754959, 0.5663678, 0.553524808248162, 0.5428496
+ENa_0 = R*T/F * log( Nao / Nass_0 )
+EK_0 = R*T/F * log( Ko / Ki_0 )
+ECa_0 = R*T/F/2.0 * log( Cao / Cass_0 )
 
 # INa
 INa_0 = PNa * INam_0**3 * ( 0.9*INah1_0 + 0.1*INah2_0) * Nao * V_0 * F**2/(R*T) * ( exp( (V_0-ENa_0)*F/R/T ) - 1) / ( exp( V_0*F/R/T ) - 1)

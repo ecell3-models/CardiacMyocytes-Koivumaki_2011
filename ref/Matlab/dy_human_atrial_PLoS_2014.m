@@ -34,6 +34,7 @@ function [dy] = dy_human_atrial(t, y, modelvariant)
 %**********************************************
 
 global stim INa ICaL It Isus IKr IKs IK1 INab ICab ICaP INaK INaCa If Jrelss Jrel1 Jrel2 Jrel3 J_bulkSERCA1 J_bulkSERCA2 J_bulkSERCA3 J_bulkSERCAss JSRCaleak1 JSRCaleak2 JSRCaleak3 JSRCaleakss
+format long
 
 %**********************************************
 % Definition of differential variables
@@ -212,6 +213,8 @@ xj_nj_Nai = 0.02/2 * Ddcell + 2*dx; % diffusion distance from center of junct to
 Vnonjunct = zeros(length(j),1);
 Vnonjunct = (pi.*(j.*dx).^2.*lcell-pi.*((j-1).*dx).^2.*lcell).*1e-6.*0.5; %nL
 
+% disp(Vnonjunct);
+
 Vcytosol = sum(Vnonjunct) + Vss;
 
 VSR = 0.05.*Vnonjunct./2*0.9 / Dvcell;
@@ -222,6 +225,11 @@ Vnonjunct_Nai = sum(Vnonjunct);
 Cai = zeros(length(j),1);
 Cai = y(i_Cacenter:length(j)+i_Cacenter-1);
 CaSR = y(length(j)+i_Cacenter:length(j)*2+i_Cacenter-1);
+
+% if t == 0.0
+%     disp(Cai)
+%     disp(CaSR)
+% end
 
 % Cytosol Ca Buffers
 Begta = 0;

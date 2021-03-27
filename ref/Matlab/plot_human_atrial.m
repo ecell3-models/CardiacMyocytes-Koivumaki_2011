@@ -136,85 +136,85 @@ title(filename)
 
 figure
   subplot(311)
-  plot(t,cadata(1:end,1),t,cadata(1:end,2),t,cadata(1:end,3),t,cadata(1:end,4),t,cassdata)
+  plot(t,cadata(1:end,1),t,cadata(1:end,2),t,cadata(1:end,3),t,cadata(1:end,4),t,cassdata,'LineWidth',2)
   title(['Ca data 1-4 + ss ' filename])
   legend('ca1','ca2','ca3','ca4','cass')
   subplot(312)
   camean = (cadata(1:end,1).*1.625 + cadata(1:end,2).*1.625 + cadata(1:end,3).*1.625 + cadata(1:end,4).*1.625 + cassdata.*0.02)./6.52 ;
   cameannj = mean(cadata');
   
-  plot(t,camean,t,cameannj)
+  plot(t,camean,t,cameannj,'LineWidth',2)
   legend('camean','cameannj')
   title('mean ca data 1-4')
   subplot(313)
-  plot(t,dydata(1:end,i_SERCACa1),t,dydata(1:end,i_SERCACa2),t,dydata(1:end,i_SERCACa3),t,dydata(1:end,i_SERCACass)); % SERCA Ca bound
+  plot(t,dydata(1:end,i_SERCACa1),t,dydata(1:end,i_SERCACa2),t,dydata(1:end,i_SERCACa3),t,dydata(1:end,i_SERCACass),'LineWidth',2); % SERCA Ca bound
   title('SERCA Ca bound 1-3 + ss');
   
 figure
   subplot(341)
-  plot(t,dydata(1:end,i_V));
+  plot(t,dydata(1:end,i_V),'LineWidth',2);
   title(['Vm' filename])
   subplot(342)
-  plot(t,dydata(1:end,i_Nass), t,dydata(1:end,i_Nai))
+  plot(t,dydata(1:end,i_Nass), t,dydata(1:end,i_Nai),'LineWidth',2)
   legend('Nass', 'Nai')
     subplot(343)
-  plot(t,dydata(1:end,i_Ki))
+  plot(t,dydata(1:end,i_Ki),'LineWidth',2)
   legend('Ki')
   subplot(344)
-  plot(t,If)
+  plot(t,If,'LineWidth',2)
   legend('If')
   subplot(345)
-  plot(t,INaCa)
+  plot(t,INaCa,'LineWidth',2)
   legend('INCX')
   subplot(346)
-  plot(t,INaK)
+  plot(t,INaK,'LineWidth',2)
   legend('INaK')
       subplot(347)
-  plot(t,ICaP)
+  plot(t,ICaP,'LineWidth',2)
   legend('ICaP')
         subplot(348)
-  plot(t,ICab)
+  plot(t,ICab,'LineWidth',2)
   legend('ICab')
           subplot(349)
-  plot(t,INab)
+  plot(t,INab,'LineWidth',2)
   legend('INab')
           subplot(3,4,10)
-  plot(t,IK1,t,IKs,t,IKr,t,Isus,t,It)
+  plot(t,IK1,t,IKs,t,IKr,t,Isus,t,It,'LineWidth',2)
   legend('IK1','IKs','IKr','Isus','It' )
            subplot(3,4,11)
-  plot(t,ICaL)
+  plot(t,ICaL,'LineWidth',2)
   legend('ICaL') 
              subplot(3,4,12)
-  plot(t,INa)
+  plot(t,INa,'LineWidth',2)
   legend('INa') 
   
 figure
 
   subplot(421)
-  plot(t,caSRdata(1:end,1),t,caSRdata(1:end,2),t,caSRdata(1:end,3),t,caSRdata(1:end,4))
+  plot(t,caSRdata(1:end,1),t,caSRdata(1:end,2),t,caSRdata(1:end,3),t,caSRdata(1:end,4),'LineWidth',2)
   legend('SRca1','SRca2','SRca3','SRCa4 (rel to ss)');
     title(filename)
 
   subplot(422)
-  plot(t,Jrel1,t,Jrel2,t,Jrel3,t,Jrelss)
+  plot(t,Jrel1,t,Jrel2,t,Jrel3,t,Jrelss,'LineWidth',2)
   legend('Jrel1','Jrel2','Jrel3','Jrelss')
   subplot(423)
-  plot(t,J_bulkSERCA1,t,J_bulkSERCA2,t,J_bulkSERCA3,t,J_bulkSERCAss)
+  plot(t,J_bulkSERCA1,t,J_bulkSERCA2,t,J_bulkSERCA3,t,J_bulkSERCAss,'LineWidth',2)
   legend('Serca1','Serca2','Serca3','Sercass')
   subplot(424)
-  plot(t,JSRCaleak1,t,JSRCaleak2,t,JSRCaleak3,t,JSRCaleakss)
+  plot(t,JSRCaleak1,t,JSRCaleak2,t,JSRCaleak3,t,JSRCaleakss,'LineWidth',2)
      legend('SRleak1','SRleak2','SRleak3','SRleakss')
   subplot(425)
-  plot(t,dydata(:,i_RyRoss),t,dydata(:,i_RyRcss),t,dydata(:,i_RyRass));
+  plot(t,dydata(:,i_RyRoss),t,dydata(:,i_RyRcss),t,dydata(:,i_RyRass),'LineWidth',2);
   legend('RyRoss','RyRcss','RyRass')
     subplot(426)
-  plot(t,dydata(:,i_RyRo1),t,dydata(:,i_RyRc1),t,dydata(:,i_RyRa1))
+  plot(t,dydata(:,i_RyRo1),t,dydata(:,i_RyRc1),t,dydata(:,i_RyRa1),'LineWidth',2)
   legend('RyRo1','RyRc1','RyRa1')
       subplot(427)
-  plot(t,dydata(:,i_RyRo2),t,dydata(:,i_RyRc2),t,dydata(:,i_RyRa2))
+  plot(t,dydata(:,i_RyRo2),t,dydata(:,i_RyRc2),t,dydata(:,i_RyRa2),'LineWidth',2)
   legend('RyRo2','RyRc2','RyRa2')
         subplot(428)
-  plot(t,dydata(:,i_RyRo3),t,dydata(:,i_RyRc3),t,dydata(:,i_RyRa3))
+  plot(t,dydata(:,i_RyRo3),t,dydata(:,i_RyRc3),t,dydata(:,i_RyRa3),'LineWidth',2)
   legend('RyRo3','RyRc3','RyRa3')
 
     
