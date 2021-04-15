@@ -160,27 +160,6 @@ ECa_app = 60.          # ICaL:ECa_app
 gCaL = 15. * cAF_gCaL  # ICaL:ECa_app
 kCan = 2.
 kCa = 0.6e-3           # ICaL:k_Ca
-h_ICaLf1 = 0.
-#            k1     k2      k3           k4    k5      k6   k7            k8  k9
-# ICaLfinf = 0.00 + 1.00 / (1 + exp((V + 27.4)/7.1)) + 0 / (1 + exp(-(V - 0.)/1.0e10))
-# ICaLfinf = 0.04 + 0.96 / (1 + exp((V + 25.5)/8.4)) + 1 / (1 + exp(-(V - 60)/8.0)) # cAF
-k_ICaLfinf1 = 0.04
-k_ICaLfinf2 = 0.96
-k_ICaLfinf4 = 25.5
-k_ICaLfinf5 = 8.4
-k_ICaLfinf6 = 1.
-k_ICaLfinf8 = 60.
-k_ICaLfinf9 = 8.
-#            k1                 k2  k3   k4    k5
-# ICaLdtau = 0.0027 * exp( -((V+35)/30)**2 ) + 0.002
-# ICaLdtau = 0.00065* exp( -((V+35)/30)**2 ) + 0.0005
-k_ICaLdtau1 = 0.00065
-k_ICaLdtau5 = 0.0005
-#             k1               k2  k3     k4    k5
-# ICaLf2tau = 1.3323*exp( -((V+40)/14.2)**2 ) + 0.0626
-# ICaLf2tau = 1.34  *exp( -((V+40)/14.2)**2 ) + 0.04  # cAF
-k_ICaLf2tau1 = 1.34
-k_ICaLf2tau5 = 0.04
 
 #gt = 7.5
 gt = 8.25 * cAF_gt          # It:g_t     Increased by ~9# in Maleckar et al.

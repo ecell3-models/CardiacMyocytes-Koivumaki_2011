@@ -24,21 +24,21 @@ System System( / )
   Variable Variable( Nao )
   {
     MolarConc    0.13;
-%line 431 Koivumaki-2011_nSR.em
+%line 410 Koivumaki-2011_nSR.em
     Fixed  1;
   }
 
   Variable Variable( Ko )
   {
     MolarConc    0.0054;
-%line 437 Koivumaki-2011_nSR.em
+%line 416 Koivumaki-2011_nSR.em
     Fixed  1;
   }
 
   Variable Variable( Cao )
   {
     MolarConc    0.0018;
-%line 443 Koivumaki-2011_nSR.em
+%line 422 Koivumaki-2011_nSR.em
     Fixed  1;
   }
 
@@ -59,7 +59,7 @@ System System( /Cell )
   Variable Variable( SIZE )
   {
     Value    8.3322287625e-12;
-%line 463 Koivumaki-2011_nSR.em
+%line 442 Koivumaki-2011_nSR.em
   }
 }
 
@@ -71,7 +71,7 @@ System System( /Cell/Cytosol )
   Variable Variable( SIZE )
   {
     Value    8.14997753985e-12;
-%line 474 Koivumaki-2011_nSR.em
+%line 453 Koivumaki-2011_nSR.em
   }
 
   Variable Variable(K_i)
@@ -90,7 +90,7 @@ System System( /Cell/Cytosol/bulk )
   Variable Variable( SIZE )
   {
     Value    8.14997753985e-12;
-%line 492 Koivumaki-2011_nSR.em
+%line 471 Koivumaki-2011_nSR.em
   }
 
   Variable Variable(Na_i)
@@ -105,11 +105,11 @@ System System( /Cell/Cytosol/bulk )
     
 
     D  0.12;
-%line 509 Koivumaki-2011_nSR.em
+%line 488 Koivumaki-2011_nSR.em
     Aj_nj  2492.32441226;
-%line 510 Koivumaki-2011_nSR.em
+%line 489 Koivumaki-2011_nSR.em
     xj_nj  3.26;
-%line 511 Koivumaki-2011_nSR.em
+%line 490 Koivumaki-2011_nSR.em
 
     VariableReferenceList
       [nj    :.:Na_i    0]
@@ -715,27 +715,6 @@ System System( /Cell/Membrane )
     g_Ca_L   15.0;    # 6.75,  g_Ca_L in component L_type_Ca_channel (nanoS)
     kCa      0.0006;     # 0.025, k_Ca in component L_type_Ca_channel (millimolar)
     kCan     2.0;
-    h_f1     0.0;
-    k_finf1  0.04;
-    k_finf2  0.96;
-    k_finf4  25.5;
-    k_finf5  8.4;
-    k_finf6  1.0;
-    k_finf8  60.0;
-    k_finf9  8.0;
-    #            k1     k2      k3           k4    k5      k6   k7            k8  k9
-    # ICaLfinf = 0.00 + 1.00 / (1 + exp((V + 27.4)/7.1)) + 0 / (1 + exp(-(V - 0.)/1.0e10))
-    # ICaLfinf = 0.04 + 0.96 / (1 + exp((V + 25.5)/8.4)) + 1 / (1 + exp(-(V - 60)/8.0)) # cAF
-    k_dtau1  0.00065;
-    k_dtau5  0.0005;
-    #            k1                 k2  k3   k4    k5
-    # ICaLdtau = 0.0027 * exp( -((V+35)/30)**2 ) + 0.002
-    # ICaLdtau = 0.00065* exp( -((V+35)/30)**2 ) + 0.0005
-    k_f2tau1 1.34;
-    k_f2tau5 0.04;
-    #             k1               k2  k3     k4    k5
-    # ICaLf2tau = 1.3323*exp( -((V+40)/14.2)**2 ) + 0.0626
-    # ICaLf2tau = 1.34  *exp( -((V+40)/14.2)**2 ) + 0.04  # cAF
 
     VariableReferenceList
       [ICaL       :.:ICaL               1]
@@ -1135,12 +1114,12 @@ System System( /Cell/Membrane )
       [INaCa :../Membrane:INaCa  0] # pA = pC/sec
       [Cass  :../Cytosol/ss:Ca   1];
   }
-        %line 962 ./Koivumaki-2011_cAF_Cell_Membrane.em
+        %line 941 ./Koivumaki-2011_cAF_Cell_Membrane.em
 
 } # End of /Cell/Membrane
-%line 521 Koivumaki-2011_nSR.em
+%line 500 Koivumaki-2011_nSR.em
 
-%line 522 Koivumaki-2011_nSR.em
+%line 501 Koivumaki-2011_nSR.em
 
 # /Cell/Cytoplasm/{ss||bulk_x}
 
@@ -1451,7 +1430,7 @@ System System( /Cell/Cytosol/ss )
 
 } # END of /Cell/Cytosol/ss
 %line 368 ./Koivumaki-2011_cAF_Cell_Cytoplasm_bulk_x.em
-%line 534 Koivumaki-2011_nSR.em
+%line 513 Koivumaki-2011_nSR.em
 
 
 
@@ -1737,7 +1716,7 @@ System System( /Cell/Cytosol/bulk_1 )
 
 } # END of /Cell/Cytosol/bulk_1
 %line 368 ./Koivumaki-2011_cAF_Cell_Cytoplasm_bulk_x.em
-%line 534 Koivumaki-2011_nSR.em
+%line 513 Koivumaki-2011_nSR.em
 
 
 
@@ -2023,7 +2002,7 @@ System System( /Cell/Cytosol/bulk_2 )
 
 } # END of /Cell/Cytosol/bulk_2
 %line 368 ./Koivumaki-2011_cAF_Cell_Cytoplasm_bulk_x.em
-%line 534 Koivumaki-2011_nSR.em
+%line 513 Koivumaki-2011_nSR.em
 
 
 
@@ -2309,7 +2288,7 @@ System System( /Cell/Cytosol/bulk_3 )
 
 } # END of /Cell/Cytosol/bulk_3
 %line 368 ./Koivumaki-2011_cAF_Cell_Cytoplasm_bulk_x.em
-%line 534 Koivumaki-2011_nSR.em
+%line 513 Koivumaki-2011_nSR.em
 
 
 
@@ -2389,11 +2368,11 @@ System System( /Cell/Cytosol/bulk_4 )
 
 } # END of /Cell/Cytosol/bulk_4
 %line 368 ./Koivumaki-2011_cAF_Cell_Cytoplasm_bulk_x.em
-%line 534 Koivumaki-2011_nSR.em
+%line 513 Koivumaki-2011_nSR.em
 
 
 
-%line 535 Koivumaki-2011_nSR.em
+%line 514 Koivumaki-2011_nSR.em
 
 # /Cell/SR_x
 
@@ -2459,7 +2438,7 @@ System System( /Cell/SR_1 )
 
 } # END of /Cell/SR_1
 %line 60 ./Koivumaki-2011_Cell_SR_x.em
-%line 541 Koivumaki-2011_nSR.em
+%line 520 Koivumaki-2011_nSR.em
 
 
 
@@ -2524,7 +2503,7 @@ System System( /Cell/SR_2 )
 
 } # END of /Cell/SR_2
 %line 60 ./Koivumaki-2011_Cell_SR_x.em
-%line 541 Koivumaki-2011_nSR.em
+%line 520 Koivumaki-2011_nSR.em
 
 
 
@@ -2589,7 +2568,7 @@ System System( /Cell/SR_3 )
 
 } # END of /Cell/SR_3
 %line 60 ./Koivumaki-2011_Cell_SR_x.em
-%line 541 Koivumaki-2011_nSR.em
+%line 520 Koivumaki-2011_nSR.em
 
 
 
@@ -2654,8 +2633,8 @@ System System( /Cell/SR_4 )
 
 } # END of /Cell/SR_4
 %line 60 ./Koivumaki-2011_Cell_SR_x.em
-%line 541 Koivumaki-2011_nSR.em
+%line 520 Koivumaki-2011_nSR.em
 
 
 
-%line 542 Koivumaki-2011_nSR.em
+%line 521 Koivumaki-2011_nSR.em

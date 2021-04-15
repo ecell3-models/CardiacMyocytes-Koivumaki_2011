@@ -532,27 +532,6 @@ System System( /Cell/Membrane )
     g_Ca_L   @gCaL;    # 6.75,  g_Ca_L in component L_type_Ca_channel (nanoS)
     kCa      @kCa;     # 0.025, k_Ca in component L_type_Ca_channel (millimolar)
     kCan     @kCan;
-    h_f1     @h_ICaLf1;
-    k_finf1  @k_ICaLfinf1;
-    k_finf2  @k_ICaLfinf2;
-    k_finf4  @k_ICaLfinf4;
-    k_finf5  @k_ICaLfinf5;
-    k_finf6  @k_ICaLfinf6;
-    k_finf8  @k_ICaLfinf8;
-    k_finf9  @k_ICaLfinf9;
-    #            k1     k2      k3           k4    k5      k6   k7            k8  k9
-    # ICaLfinf = 0.00 + 1.00 / (1 + exp((V + 27.4)/7.1)) + 0 / (1 + exp(-(V - 0.)/1.0e10))
-    # ICaLfinf = 0.04 + 0.96 / (1 + exp((V + 25.5)/8.4)) + 1 / (1 + exp(-(V - 60)/8.0)) # cAF
-    k_dtau1  @k_ICaLdtau1;
-    k_dtau5  @k_ICaLdtau5;
-    #            k1                 k2  k3   k4    k5
-    # ICaLdtau = 0.0027 * exp( -((V+35)/30)**2 ) + 0.002
-    # ICaLdtau = 0.00065* exp( -((V+35)/30)**2 ) + 0.0005
-    k_f2tau1 @k_ICaLf2tau1;
-    k_f2tau5 @k_ICaLf2tau5;
-    #             k1               k2  k3     k4    k5
-    # ICaLf2tau = 1.3323*exp( -((V+40)/14.2)**2 ) + 0.0626
-    # ICaLf2tau = 1.34  *exp( -((V+40)/14.2)**2 ) + 0.04  # cAF
 
     VariableReferenceList
       [ICaL       :.:ICaL               1]

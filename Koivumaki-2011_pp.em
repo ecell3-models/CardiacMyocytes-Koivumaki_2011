@@ -1,4 +1,4 @@
-%line 1 ./Koivumaki-2011.em
+%line 1 Koivumaki-2011.em
 
 
 
@@ -24,21 +24,21 @@ System System( / )
   Variable Variable( Nao )
   {
     MolarConc    0.13;
-%line 338 ./Koivumaki-2011.em
+%line 356 Koivumaki-2011.em
     Fixed  1;
   }
 
   Variable Variable( Ko )
   {
     MolarConc    0.0054;
-%line 344 ./Koivumaki-2011.em
+%line 362 Koivumaki-2011.em
     Fixed  1;
   }
 
   Variable Variable( Cao )
   {
     MolarConc    0.0018;
-%line 350 ./Koivumaki-2011.em
+%line 368 Koivumaki-2011.em
     Fixed  1;
   }
 
@@ -59,7 +59,7 @@ System System( /Cell )
   Variable Variable( SIZE )
   {
     Value    8.3322287625e-12;
-%line 370 ./Koivumaki-2011.em
+%line 388 Koivumaki-2011.em
   }
 }
 
@@ -71,7 +71,7 @@ System System( /Cell/Cytosol )
   Variable Variable( SIZE )
   {
     Value    8.14997753985e-12;
-%line 381 ./Koivumaki-2011.em
+%line 399 Koivumaki-2011.em
   }
 
   Variable Variable(K_i)
@@ -90,7 +90,7 @@ System System( /Cell/Cytosol/bulk )
   Variable Variable( SIZE )
   {
     Value    8.14997753985e-12;
-%line 399 ./Koivumaki-2011.em
+%line 417 Koivumaki-2011.em
   }
 
   Variable Variable(Na_i)
@@ -105,11 +105,11 @@ System System( /Cell/Cytosol/bulk )
     
 
     D  0.12;
-%line 416 ./Koivumaki-2011.em
+%line 434 Koivumaki-2011.em
     Aj_nj  2492.32441226;
-%line 417 ./Koivumaki-2011.em
+%line 435 Koivumaki-2011.em
     xj_nj  3.26;
-%line 418 ./Koivumaki-2011.em
+%line 436 Koivumaki-2011.em
 
     VariableReferenceList
       [nj    :.:Na_i    0]
@@ -715,6 +715,18 @@ System System( /Cell/Membrane )
     g_Ca_L   25.3125;    # 6.75,  g_Ca_L in component L_type_Ca_channel (nanoS)
     kCa      0.001;     # 0.025, k_Ca in component L_type_Ca_channel (millimolar)
     kCan     2;
+    h_f1     1.0;
+    k_finf1  0.0;
+    k_finf2  1.0;
+    k_finf4  27.4;
+    k_finf5  7.1;
+    k_finf6  0.0;
+    k_finf8  0.0;
+    k_finf9  10000000000.0;
+    k_dtau1  0.0027;
+    k_dtau4  0.002;
+    k_f2tau1 1.3323;
+    k_f2tau4 0.0626;
 
     VariableReferenceList
       [ICaL       :.:ICaL               1]
@@ -1114,12 +1126,12 @@ System System( /Cell/Membrane )
       [INaCa :../Membrane:INaCa  0] # pA = pC/sec
       [Cass  :../Cytosol/ss:Ca   1];
   }
-        %line 941 ./Koivumaki-2011_Cell_Membrane.em
+        %line 953 ./Koivumaki-2011_Cell_Membrane.em
 
 } # End of /Cell/Membrane
-%line 428 ./Koivumaki-2011.em
+%line 446 Koivumaki-2011.em
 
-%line 429 ./Koivumaki-2011.em
+%line 447 Koivumaki-2011.em
 
 # /Cell/Cytoplasm/{ss||bulk_x}
 
@@ -1429,7 +1441,7 @@ System System( /Cell/Cytosol/ss )
 
 } # END of /Cell/Cytosol/ss
 %line 367 ./Koivumaki-2011_Cell_Cytoplasm_bulk_x.em
-%line 441 ./Koivumaki-2011.em
+%line 459 Koivumaki-2011.em
 
 
 
@@ -1714,7 +1726,7 @@ System System( /Cell/Cytosol/bulk_1 )
 
 } # END of /Cell/Cytosol/bulk_1
 %line 367 ./Koivumaki-2011_Cell_Cytoplasm_bulk_x.em
-%line 441 ./Koivumaki-2011.em
+%line 459 Koivumaki-2011.em
 
 
 
@@ -1999,7 +2011,7 @@ System System( /Cell/Cytosol/bulk_2 )
 
 } # END of /Cell/Cytosol/bulk_2
 %line 367 ./Koivumaki-2011_Cell_Cytoplasm_bulk_x.em
-%line 441 ./Koivumaki-2011.em
+%line 459 Koivumaki-2011.em
 
 
 
@@ -2284,7 +2296,7 @@ System System( /Cell/Cytosol/bulk_3 )
 
 } # END of /Cell/Cytosol/bulk_3
 %line 367 ./Koivumaki-2011_Cell_Cytoplasm_bulk_x.em
-%line 441 ./Koivumaki-2011.em
+%line 459 Koivumaki-2011.em
 
 
 
@@ -2364,11 +2376,11 @@ System System( /Cell/Cytosol/bulk_4 )
 
 } # END of /Cell/Cytosol/bulk_4
 %line 367 ./Koivumaki-2011_Cell_Cytoplasm_bulk_x.em
-%line 441 ./Koivumaki-2011.em
+%line 459 Koivumaki-2011.em
 
 
 
-%line 442 ./Koivumaki-2011.em
+%line 460 Koivumaki-2011.em
 
 # /Cell/SR_x
 
@@ -2434,7 +2446,7 @@ System System( /Cell/SR_1 )
 
 } # END of /Cell/SR_1
 %line 60 ./Koivumaki-2011_Cell_SR_x.em
-%line 448 ./Koivumaki-2011.em
+%line 466 Koivumaki-2011.em
 
 
 
@@ -2499,7 +2511,7 @@ System System( /Cell/SR_2 )
 
 } # END of /Cell/SR_2
 %line 60 ./Koivumaki-2011_Cell_SR_x.em
-%line 448 ./Koivumaki-2011.em
+%line 466 Koivumaki-2011.em
 
 
 
@@ -2564,7 +2576,7 @@ System System( /Cell/SR_3 )
 
 } # END of /Cell/SR_3
 %line 60 ./Koivumaki-2011_Cell_SR_x.em
-%line 448 ./Koivumaki-2011.em
+%line 466 Koivumaki-2011.em
 
 
 
@@ -2629,8 +2641,8 @@ System System( /Cell/SR_4 )
 
 } # END of /Cell/SR_4
 %line 60 ./Koivumaki-2011_Cell_SR_x.em
-%line 448 ./Koivumaki-2011.em
+%line 466 Koivumaki-2011.em
 
 
 
-%line 449 ./Koivumaki-2011.em
+%line 467 Koivumaki-2011.em

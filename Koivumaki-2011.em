@@ -103,6 +103,24 @@ ECa_app = 60    # ICaL:ECa_app
 gCaL = 25.3125  # ICaL:ECa_app
 kCan = 2
 kCa = 1e-3      # ICaL:k_Ca
+h_ICaLf1 = 1.
+#            k1     k2      k3           k4    k5      k6   k7            k8  k9
+# ICaLfinf = 0.00 + 1.00 / (1 + exp((V + 27.4)/7.1)) + 0 / (1 + exp(-(V - 0.)/1.0e10))
+k_ICaLfinf1 = 0.
+k_ICaLfinf2 = 1.
+k_ICaLfinf4 = 27.4
+k_ICaLfinf5 = 7.1
+k_ICaLfinf6 = 0.
+k_ICaLfinf8 = 0.
+k_ICaLfinf9 = 1.0e10
+#            k1                 k2  k3         k4
+# ICaLdtau = 0.0027 * exp( -((V+35)/30)**2 ) + 0.002
+k_ICaLdtau1 = 0.0027
+k_ICaLdtau4 = 0.002
+#             k1               k2  k3     k4    k5
+# ICaLf2tau = 1.3323*exp( -((V+40)/14.2)**2 ) + 0.0626
+k_ICaLf2tau1 = 1.3323
+k_ICaLf2tau4 = 0.0626
 
 
 #gt = 7.5

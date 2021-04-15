@@ -532,6 +532,18 @@ System System( /Cell/Membrane )
     g_Ca_L   @gCaL;    # 6.75,  g_Ca_L in component L_type_Ca_channel (nanoS)
     kCa      @kCa;     # 0.025, k_Ca in component L_type_Ca_channel (millimolar)
     kCan     @kCan;
+    h_f1     @h_ICaLf1;
+    k_finf1  @k_ICaLfinf1;
+    k_finf2  @k_ICaLfinf2;
+    k_finf4  @k_ICaLfinf4;
+    k_finf5  @k_ICaLfinf5;
+    k_finf6  @k_ICaLfinf6;
+    k_finf8  @k_ICaLfinf8;
+    k_finf9  @k_ICaLfinf9;
+    k_dtau1  @k_ICaLdtau1;
+    k_dtau4  @k_ICaLdtau4;
+    k_f2tau1 @k_ICaLf2tau1;
+    k_f2tau4 @k_ICaLf2tau4;
 
     VariableReferenceList
       [ICaL       :.:ICaL               1]
