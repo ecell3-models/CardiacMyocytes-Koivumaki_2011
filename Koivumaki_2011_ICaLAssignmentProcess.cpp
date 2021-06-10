@@ -36,6 +36,7 @@ LIBECS_DM_CLASS( Koivumaki_2011_ICaLAssignmentProcess, Process )
     PROPERTYSLOT_SET_GET( Real, k_f2tau2 );
     PROPERTYSLOT_SET_GET( Real, k_f2tau3 );
     PROPERTYSLOT_SET_GET( Real, k_f2tau4 );
+    PROPERTYSLOT_SET_GET( Real, k_fcatau );
   }
 
   Koivumaki_2011_ICaLAssignmentProcess()
@@ -57,7 +58,8 @@ LIBECS_DM_CLASS( Koivumaki_2011_ICaLAssignmentProcess, Process )
     k_f2tau1( 1.34 ),
     k_f2tau2( 40.0 ),
     k_f2tau3( 14.2 ),
-    k_f2tau4( 0.04 )
+    k_f2tau4( 0.04 ),
+    k_fcatau( 2.0e-3 )
   {
     // do nothing
   }
@@ -84,6 +86,7 @@ LIBECS_DM_CLASS( Koivumaki_2011_ICaLAssignmentProcess, Process )
   SIMPLE_SET_GET_METHOD( Real, k_f2tau2 );
   SIMPLE_SET_GET_METHOD( Real, k_f2tau3 );
   SIMPLE_SET_GET_METHOD( Real, k_f2tau4 );
+  SIMPLE_SET_GET_METHOD( Real, k_fcatau );
   virtual void initialize()
   {
     Process::initialize();
@@ -109,10 +112,6 @@ LIBECS_DM_CLASS( Koivumaki_2011_ICaLAssignmentProcess, Process )
     v = V->getValue();
     // ICaLfcainf = 1-1 / ( 1 + (kCa/Cass)**(kCan))
     ICaLfcainf->setValue( 1.0 - 1.0 / ( 1.0 + pow( kCa /( Ca_ss->getMolarConc() * 1000.0 ), kCan)) );
-    // hAM_KKT.ode      ICaL = gCaL *(ICaLd) * (ICaLfca) * (ICaLf1) * (ICaLf2) * (V - ECa_app)
-    // hAM_KSMT_cAF.ode ICaL = gCaL *(ICaLd) * (ICaLfca)            * (ICaLf2) * (V - ECa_app)
-    // hAM_KSMT_nSR.ode ICaL = gCaL *(ICaLd) * (ICaLfca)            * (ICaLf2) * (V - ECa_app)
-    ICaL->setValue( g_Ca_L * ICaLd->getValue() * ICaLfca->getValue() * pow( ICaLf1->getValue(), h_f1 ) * ICaLf2->getValue() * ( v - E_Ca_app ));
     // ICaLdinf = 1/(1+exp((V+9)/-5.8))
     ICaLdinf->setValue( 1.0 /( 1.0 + exp(( v + 9.0 )/ -5.8 )));
     /*
@@ -129,9 +128,11 @@ LIBECS_DM_CLASS( Koivumaki_2011_ICaLAssignmentProcess, Process )
     hAM_KSMT_nSR.ode ICaLdtau = 0.00065* exp( -((V+35)/30)**2 ) + 0.0005
     */
     ICaLdtau->setValue( k_dtau1 * exp( -gsl_pow_2(( v + k_dtau2 )/ k_dtau3 )) + k_dtau4 );
-    // ICaLf1tau = 0.98698*exp( -((V+30.16047)/7.09396)**2 ) + 0.04275/(1+exp((V-51.61555)/-80.61331)) + 0.03576/(1+exp((V+29.57272)/13.21758)) - 0.00821
+    /* atriapace-master/ref/Gotran/hAM_KKT.ode
+    ICaLf1tau = 0.98698*exp( -((V+30.16047)/7.09396)**2 ) + 0.04275/(1+exp((V-51.61555)/-80.61331)) + 0.03576/(1+exp((V+29.57272)/13.21758)) - 0.00821
+    */
     ICaLf1tau->setValue( 0.98698 * exp( -gsl_pow_2(( v + 30.16047 )/ 7.09396 ) ) + 0.04275/( 1.0 + exp(( v - 51.61555 )/ -80.61331 )) + 0.03576 /( 1.0 + exp(( v + 29.57272 )/ 13.21758 )) - 0.00821 );
-    /*
+    /* triapace-master/ref/Gotran/
                                  k1               k2  k3           k4
     hAM_KKT.ode      ICaLf2tau = 1.3323*exp( -((V+40)/14.2)**2 ) + 0.0626
     hAM_KSMT_cAF.ode ICaLf2tau = 1.34  *exp( -((V+40)/14.2)**2 ) + 0.04
@@ -139,7 +140,13 @@ LIBECS_DM_CLASS( Koivumaki_2011_ICaLAssignmentProcess, Process )
     */
     ICaLf2tau->setValue( k_f2tau1 * exp( -gsl_pow_2(( v + k_f2tau2 )/ k_f2tau3 )) + k_f2tau4 );
     // ICaLfcatau = 2e-3
-    ICaLfcatau->setValue( 2.0e-3 );
+    ICaLfcatau->setValue( k_fcatau );
+    /*
+    hAM_KKT.ode      ICaL = gCaL *(ICaLd) * (ICaLfca) * (ICaLf1) * (ICaLf2) * (V - ECa_app)
+    // hAM_KSMT_cAF.ode ICaL = gCaL *(ICaLd) * (ICaLfca)            * (ICaLf2) * (V - ECa_app)
+    // hAM_KSMT_nSR.ode ICaL = gCaL *(ICaLd) * (ICaLfca)            * (ICaLf2) * (V - ECa_app)
+    */
+    ICaL->setValue( g_Ca_L * ICaLd->getValue() * ICaLfca->getValue() * pow( ICaLf1->getValue(), h_f1 ) * ICaLf2->getValue() * ( v - E_Ca_app ));
   }
 
  protected:
@@ -184,6 +191,8 @@ LIBECS_DM_CLASS( Koivumaki_2011_ICaLAssignmentProcess, Process )
   Real k_f2tau2;
   Real k_f2tau3;
   Real k_f2tau4;
+
+  Real k_fcatau;
 
   Real v;
 };
