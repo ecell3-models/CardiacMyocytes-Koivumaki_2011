@@ -1,6 +1,8 @@
-
 #include "libecs.hpp"
 #include "Process.hpp"
+
+#include <gsl/gsl_errno.h>
+#include <gsl/gsl_math.h>
 
 USE_LIBECS;
 
@@ -46,12 +48,25 @@ LIBECS_DM_CLASS( Nygren_1998i_NaCaAssignmentProcess, Process )
     Na_c  = getVariableReference( "Na_c" ).getVariable();
     Ca_i  = getVariableReference( "Ca_i" ).getVariable();
 
+    _gF_RT = gamma * F / R / T;
+    _g_1F_RT = ( gamma - 1.0 ) * F / R / T;
   }
 
   virtual void fire()
   {
-    i_NaCa->setValue( 1 * ((k_NaCa*((pow((Na_i->getMolarConc()*1000), 3.00000))*(Ca_c->getMolarConc()*1000)*exp((gamma*F*V->getValue())/(R*T))-(pow((Na_c->getMolarConc()*1000), 3.00000))*(Ca_i->getMolarConc()*1000)*exp(((gamma-1.00000)*V->getValue()*F)/(R*T))))/(1.00000+d_NaCa*((pow((Na_c->getMolarConc()*1000), 3.00000))*(Ca_i->getMolarConc()*1000)+(pow((Na_i->getMolarConc()*1000), 3.00000))*(Ca_c->getMolarConc()*1000)))) );
+    // INaCa = kNaCa * ( (exp( gam.*y(i_V)*F/R/T ) .* Nass.^3 .* Cao - exp( (gam-1).*y(i_V)*F/R/T ) .* Nao^3 .* y(i_Cass)*fCaNCX ) / ( 1 + dNaCa*(Nao^3 .* y(i_Cass)*fCaNCX + Nass.^3 .* Cao) ) );
 
+    _V = V->getValue();
+    _Na_i_mM_3 = gsl_pow_3( Na_i->getMolarConc() * 1000.0 );
+    _Na_c_mM_3 = gsl_pow_3( Na_c->getMolarConc() * 1000.0 );
+    _Ca_i_mM = Ca_i->getMolarConc() * 1000.0;
+    _Ca_c_mM = Ca_c->getMolarConc() * 1000.0;
+
+    i_NaCa->setValue(
+      k_NaCa * ( _Na_i_mM_3 * _Ca_c_mM * exp( _gF_RT * _V )
+      - _Na_c_mM_3 * _Ca_i_mM * exp( _g_1F_RT * _V ))
+      / ( 1.0 + d_NaCa * ( _Na_c_mM_3 * _Ca_i_mM + _Na_i_mM_3 * _Ca_c_mM ))
+    );
   }
 
  protected:
@@ -70,6 +85,13 @@ LIBECS_DM_CLASS( Nygren_1998i_NaCaAssignmentProcess, Process )
   Real k_NaCa;
   Real gamma;
 
+  Real _gF_RT;
+  Real _g_1F_RT;
+  Real _V;
+  Real _Na_i_mM_3;
+  Real _Na_c_mM_3;
+  Real _Ca_i_mM;
+  Real _Ca_c_mM;
 };
 
 LIBECS_DM_INIT( Nygren_1998i_NaCaAssignmentProcess, Process );
