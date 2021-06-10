@@ -230,6 +230,7 @@ Nai_0 = 9.9033
 Ki_0 = 138.2
 Nass_0 = 8.993
 Cass_0 = 0.0001454
+Cai_0 = [ Cass_0, 0.000135, 0.000138, 0.000144, 0.000156 ]
 RyRoss_0 = 0.002010
 RyRcss_0 = 0.9999
 RyRass_0 = 0.2212
@@ -238,7 +239,7 @@ RyRc_0 = [ RyRcss_0, 0.9978, 0.9983, 0.9990 ]
 RyRa_0 = [ RyRass_0, 0.1631, 0.1683, 0.1824 ]
 SERCACass_0 = 0.0007291
 SERCACa_0 = [ SERCACass_0, 0.0009545, 0.0009013, 0.0008056 ]
-CaCytosol_0 = [ Cass_0, 0.000135, 0.000138, 0.000144, 0.000156 ]
+CaCytosol_0 = Cai_0
 CaSR_0 = [ 0, 0.3326, 0.3181, 0.2903, 0.2529 ]
 
 ENa_0 = R*T/F * log ( Nao / Nass_0 )
@@ -354,7 +355,7 @@ for x in [1, 2, 3]:
 JSRCaleakss = kSRleak * ( CaSR_0[4] - Cass_0 ) * Vss
 JSRCaleak_0 = [JSRCaleakss, 0.0, 0.0, 0.0]
 for x in [1, 2, 3]:
-  JSRCaleak_0[x] = kSRleak * ( CaSR_0[x] - CaCytosol_0[x] ) * Vcytosol[x]
+  JSRCaleak_0[x] = kSRleak * ( CaSR_0[x] - Cai_0[x] ) * Vcytosol[x]
 
 # Naflux in 1 nl volume
 JNa_0 = DNa * Aj_nj / xj_nj_Nai * (Nass_0 - Nai_0)* 1e-6
